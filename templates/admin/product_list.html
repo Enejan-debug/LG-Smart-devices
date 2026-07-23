@@ -1,0 +1,47 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ t('manage_products') }} - {{ t('lg_store_admin') }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ t('manage_products') }}</h1>
+
+    <a class="btn-add" href="{{ url_for('admin.product_add') }}">{{ t('add_new_product') }}</a>
+
+    {% if products|length == 0 %}
+        <p>{{ t('no_products_yet_admin') }}</p>
+    {% else %}
+        <table class="admin-table">
+            <tr>
+                <th>SKU</th>
+                <th>{{ t('name_col') }}</th>
+                <th>{{ t('category_col') }}</th>
+                <th>{{ t('price_col') }}</th>
+                <th>{{ t('stock_col') }}</th>
+                <th>{{ t('rating_col') }}</th>
+                <th>{{ t('best_sellers') }}</th>
+                <th>{{ t('action_col') }}</th>
+            </tr>
+            {% for p in products %}
+                <tr>
+                    <td>{{ p.sku }}</td>
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.category_obj.localized_name(current_lang) if p.category_obj else "-" }}</td>
+                    <td>{{ p.price|tmt }}</td>
+                    <td>{{ p.stock_qty }}</td>
+                    <td>{{ p.quality_rating if p.quality_rating else "-" }}</td>
+                    <td>{% if p.is_featured %}🔥{% else %}-{% endif %}</td>
+                    <td>
+                        <a class="btn-edit" href="{{ url_for('admin.product_edit', product_id=p.id) }}">{{ t('edit') }}</a>
+
+                        <form action="{{ url_for('admin.product_delete', product_id=p.id) }}"
+                              method="post" style="display:inline"
+                              onsubmit="return confirm('Delete this product?');">
+                            <button type="submit" class="btn-delete">{{ t('delete') }}</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</div>
+{% endblock %}

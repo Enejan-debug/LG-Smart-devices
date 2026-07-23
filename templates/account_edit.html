@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}{{ t('edit_profile') }} - LG Store{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ t('edit_profile') }}</h1>
+
+    <div class="profile-photo-box">
+        <div class="avatar-preview">
+            {% if customer.avatar_url %}
+                <img src="{{ customer.avatar_url }}" alt="{{ customer.full_name }}">
+            {% else %}
+                <span class="avatar-initials">{{ customer.initials }}</span>
+            {% endif %}
+        </div>
+
+        <form action="{{ url_for('store.account_avatar_upload') }}" method="post" enctype="multipart/form-data" class="avatar-upload-form">
+            <label for="avatar-input" class="btn-upload-photo">
+                {{ t('change_photo') if customer.avatar_url else t('upload_photo') }}
+            </label>
+            <input id="avatar-input" type="file" name="avatar" accept="image/*"
+                   onchange="this.form.submit()" style="display:none;">
+        </form>
+    </div>
+
+    <form class="form-box" action="{{ url_for('store.account_edit') }}" method="post">
+        <label for="full_name">{{ t('full_name') }}</label>
+        <input type="text" id="full_name" name="full_name" value="{{ customer.full_name }}" required>
+
+        <label>{{ t('email') }}</label>
+        <input type="email" value="{{ customer.email }}" disabled style="background:#f4f4f4; color:#888;">
+
+        <label for="phone">{{ t('phone') }}</label>
+        <input type="tel" id="phone" name="phone" value="{{ customer.phone or '' }}">
+
+        <label for="date_of_birth">{{ t('date_of_birth') }}</label>
+        <input type="date" id="date_of_birth" name="date_of_birth"
+               value="{{ customer.date_of_birth.strftime('%Y-%m-%d') if customer.date_of_birth else '' }}">
+
+        <label for="city">{{ t('city') }}</label>
+        <input type="text" id="city" name="city" value="{{ address.city if address else '' }}">
+
+        <label for="street_address">{{ t('street_address') }}</label>
+        <input type="text" id="street_address" name="street_address" value="{{ address.street_address if address else '' }}">
+
+        <button type="submit">{{ t('save_profile') }}</button>
+    </form>
+
+    <a href="{{ url_for('store.account') }}">&larr; {{ t('my_account_title') }}</a>
+</div>
+{% endblock %}

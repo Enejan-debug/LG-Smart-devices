@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ t('admin_login_title') }} - LG Store</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="admin-body">
+
+    <div class="navbar navbar-admin">
+        <a class="brand" href="{{ url_for('store.home') }}">{{ t('lg_store_admin') }}</a>
+        <div class="nav-links">
+            <a href="{{ url_for('store.home') }}">{{ t('view_store') }}</a>
+            <span class="lang-switch">
+                <a href="{{ url_for('store.set_language', lang_code='tk') }}" class="{{ 'lang-active' if current_lang == 'tk' }}">TK</a>
+                <a href="{{ url_for('store.set_language', lang_code='ru') }}" class="{{ 'lang-active' if current_lang == 'ru' }}">RU</a>
+                <a href="{{ url_for('store.set_language', lang_code='en') }}" class="{{ 'lang-active' if current_lang == 'en' }}">EN</a>
+            </span>
+        </div>
+    </div>
+
+    <div class="flash-wrap">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <main>
+        <div class="form-box">
+            <h2>{{ t('admin_login_title') }}</h2>
+
+            <form action="{{ url_for('admin.login') }}" method="post">
+                <input type="text" name="username" placeholder="{{ t('username') }}" required>
+                <input type="password" name="password" placeholder="{{ t('password') }}" required>
+                <button type="submit">{{ t('log_in') }}</button>
+            </form>
+
+            <p style="text-align:center; font-size:13px; color:#888;">
+                Default test credentials: admin / admin123
+            </p>
+        </div>
+    </main>
+
+</body>
+</html>

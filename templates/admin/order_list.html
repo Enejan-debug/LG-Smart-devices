@@ -1,0 +1,52 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ t('orders_title') }} - {{ t('lg_store_admin') }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ t('orders_title') }}</h1>
+
+    {% if orders|length == 0 %}
+        <p>{{ t('no_orders_yet_admin') }}</p>
+    {% else %}
+        <table class="admin-table">
+            <tr>
+                <th>Order #</th>
+                <th>{{ t('customer_col') }}</th>
+                <th>{{ t('items_col') }}</th>
+                <th>{{ t('total_col') }}</th>
+                <th>{{ t('payment_col') }}</th>
+                <th>{{ t('contact_phone_col') }}</th>
+                <th>{{ t('status_col') }}</th>
+                <th>{{ t('placed_col') }}</th>
+                <th>{{ t('update_col') }}</th>
+            </tr>
+            {% for o in orders %}
+                <tr>
+                    <td>#{{ o.id }}</td>
+                    <td>{{ o.customer.full_name }}<br><small>{{ o.customer.email }}</small></td>
+                    <td>
+                        {% for item in o.items %}
+                            {{ item.quantity }} x {{ item.product_name }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>{{ o.total_amount|tmt }}</td>
+                    <td>{{ t('cash_on_pickup') if o.payment_method == "cash" else t('phone_bank_transfer') }}</td>
+                    <td>{{ o.contact_phone or "-" }}</td>
+                    <td><span class="status-tag status-{{ o.status }}">{{ o.status }}</span></td>
+                    <td>{{ o.created_at.strftime('%b %d, %Y %H:%M') }}</td>
+                    <td>
+                        <form action="{{ url_for('admin.order_update_status', order_id=o.id) }}" method="post">
+                            <select name="status" onchange="this.form.submit()">
+                                <option value="pending" {{ "selected" if o.status == "pending" }}>Pending</option>
+                                <option value="confirmed" {{ "selected" if o.status == "confirmed" }}>Confirmed</option>
+                                <option value="completed" {{ "selected" if o.status == "completed" }}>Completed</option>
+                                <option value="cancelled" {{ "selected" if o.status == "cancelled" }}>Cancelled</option>
+                            </select>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</div>
+{% endblock %}

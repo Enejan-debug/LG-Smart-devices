@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <rect width="400" height="300" fill="#f4f4f4"/>
+  <rect x="120" y="40" width="160" height="200" rx="10" fill="#eceff1"/>
+  <rect x="120" y="40" width="160" height="200" rx="10" fill="none" stroke="#c3c9cd" stroke-width="2"/>
+  <rect x="140" y="55" width="120" height="20" rx="4" fill="#3d5a80"/>
+  <circle cx="200" cy="160" r="55" fill="#ffffff" stroke="#3d5a80" stroke-width="6"/>
+  <circle cx="200" cy="160" r="40" fill="#3d5a80" opacity="0.15"/>
+  <circle cx="200" cy="160" r="25" fill="#3d5a80" opacity="0.35"/>
+  <text x="200" y="270" font-family="Arial, sans-serif" font-size="16" fill="#a50034" text-anchor="middle" font-weight="bold">LG Washing Machine</text>
+</svg>

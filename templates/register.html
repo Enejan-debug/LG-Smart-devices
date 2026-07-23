@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ t('register') }} - LG Store{% endblock %}
+
+{% block content %}
+<div class="form-box">
+    <h2>{{ t('create_account') }}</h2>
+
+    <form action="{{ url_for('store.register') }}" method="post">
+        <input type="text" name="full_name" placeholder="{{ t('full_name') }}" value="{{ form.get('full_name', '') }}" required>
+        <input type="email" name="email" placeholder="{{ t('email_address') }}" value="{{ form.get('email', '') }}" required>
+        <input type="tel" name="phone" placeholder="{{ t('phone_number') }}" value="{{ form.get('phone', '') }}">
+        <input type="password" name="password" placeholder="Password (min. 6 characters)" required>
+        <input type="password" name="confirm_password" placeholder="{{ t('confirm_password') }}" required>
+        <button type="submit">{{ t('create_account') }}</button>
+    </form>
+
+    <p style="text-align:center; font-size:14px;">
+        {{ t('already_have_account') }} <a href="{{ url_for('store.login') }}">{{ t('log_in') }}</a>
+    </p>
+</div>
+{% endblock %}

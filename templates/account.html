@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}{{ t('my_account_title') }} - LG Store{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ t('my_account_title') }}</h1>
+
+    <div class="profile-photo-box">
+        <div class="avatar-preview">
+            {% if customer.avatar_url %}
+                <img src="{{ customer.avatar_url }}" alt="{{ customer.full_name }}">
+            {% else %}
+                <span class="avatar-initials">{{ customer.initials }}</span>
+            {% endif %}
+        </div>
+        <div>
+            <div class="account-info" style="box-shadow:none; padding:0; margin-bottom:0;">
+                <p><strong>{{ t('name') }}:</strong> {{ customer.full_name }}</p>
+                <p><strong>{{ t('email') }}:</strong> {{ customer.email }}</p>
+                <p><strong>{{ t('phone') }}:</strong> {{ customer.phone or t('not_provided') }}</p>
+                <p style="font-size:12px; color:#999;">{{ t('member_since') }} {{ customer.created_at.strftime('%B %Y') }}</p>
+            </div>
+        </div>
+        <a class="btn-edit-profile" href="{{ url_for('store.account_edit') }}">✎ {{ t('edit_profile') }}</a>
+    </div>
+
+    {% if wishlist and wishlist|length > 0 %}
+        <h2>{{ t('my_wishlist') }}</h2>
+        <div class="product-grid" style="margin-bottom:30px;">
+            {% for w in wishlist %}
+                <a class="product-card" href="{{ url_for('store.product_detail', product_id=w.product.id) }}">
+                    <img src="{{ w.product.image_url }}" alt="{{ w.product.name }}">
+                    <h3>{{ w.product.name }}</h3>
+                    <div class="price">{{ w.product.price|tmt }}</div>
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <h2>{{ t('order_history') }}</h2>
+
+    {% if orders|length == 0 %}
+        <p>{{ t('no_orders_yet') }} <a href="{{ url_for('store.home') }}">{{ t('start_shopping') }}</a>.</p>
+    {% else %}
+        <div class="order-list">
+            {% for order in orders %}
+                <div class="order-card">
+                    <div class="order-card-header">
+                        <strong>{{ order.order_number or ("Order #" ~ order.id) }}</strong>
+                        <span class="order-status status-{{ order.status }}">{{ order.status|capitalize }}</span>
+                    </div>
+                    <p>{{ t('placed_on') }} {{ order.created_at.strftime('%B %d, %Y') }}</p>
+                    <p>{{ t('payment') }}: {{ t('cash_on_pickup') if order.payment_method == "cash" else t('phone_bank_transfer') }}</p>
+                    <ul>
+                        {% for item in order.items %}
+                            <li>{{ item.quantity }} x {{ item.product_name }} - {{ item.subtotal|tmt }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p class="order-total">{{ t('total') }}: {{ order.total_amount|tmt }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}{{ t('order_confirmed_title') }} - LG Store{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ t('thank_you_order') }}</h1>
+
+    <div class="order-card">
+        <div class="order-card-header">
+            <strong>Order #{{ order.id }}</strong>
+            <span class="order-status status-{{ order.status }}">{{ order.status|capitalize }}</span>
+        </div>
+        <p>{{ t('payment_method') }}: {{ t('cash_on_pickup') if order.payment_method == "cash" else t('phone_bank_transfer') }}</p>
+        <ul>
+            {% for item in order.items %}
+                <li>{{ item.quantity }} x {{ item.product_name }} - {{ item.subtotal|tmt }}</li>
+            {% endfor %}
+        </ul>
+        <p class="order-total">{{ t('total') }}: {{ order.total_amount|tmt }}</p>
+    </div>
+
+    {% if store_info %}
+    <div class="seller-contact-box">
+        <h3>{{ t('whats_next') }}</h3>
+        <p>{{ t('seller_call_you') }}</p>
+        <p>{{ t('call_store_directly') }}:</p>
+        <a class="btn-call" href="tel:{{ store_info.phone|replace(' ', '') }}">📞 {{ t('call') }} {{ store_info.phone }}</a>
+    </div>
+    {% endif %}
+
+    <a href="{{ url_for('store.account') }}">{{ t('view_all_orders') }}</a> &middot;
+    <a href="{{ url_for('store.home') }}">{{ t('continue_shopping') }}</a>
+</div>
+{% endblock %}

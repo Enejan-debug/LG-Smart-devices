@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name if product else t('product_not_found') }} - LG Store{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if not product %}
+        <p class="error-msg">{{ t('product_not_found') }}</p>
+        <a href="{{ url_for('store.home') }}">&larr; {{ t('back_to_store') }}</a>
+    {% else %}
+        <div class="product-detail">
+            <div class="product-gallery">
+                <img class="gallery-main" src="{{ product.image_url }}" alt="{{ product.name }}" id="gallery-main-img">
+                {% if product.images|length > 1 %}
+                    <div class="gallery-thumbs">
+                        {% for img in product.images %}
+                            <img src="{{ img.image_url }}" alt="{{ product.name }}"
+                                 onclick="document.getElementById('gallery-main-img').src = this.src">
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="product-detail-info">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <span class="category-tag">{{ product.category_obj.icon }} {{ product.category_obj.localized_name(current_lang) if product.category_obj else product.category }}</span>
+                    {% if session.get('customer_id') %}
+                        <form action="{{ url_for('store.wishlist_toggle', product_id=product.id) }}" method="post">
+                            <button type="submit" class="wishlist-btn" style="position:static;" title="{{ t('add_to_wishlist') }}">{{ '♥' if is_wishlisted else '♡' }}</button>
+                        </form>
+                    {% endif %}
+                </div>
+                <h1>{{ product.name }}</h1>
+
+                {% if product.quality_rating %}
+                    <div class="stars-small">
+                        {{ "★" * (product.quality_rating|round|int) }}{{ "☆" * (5 - (product.quality_rating|round|int)) }}
+                        <span class="rating-count">{{ product.quality_rating }} / 5 ({{ reviews|length }} review{{ 's' if reviews|length != 1 else '' }})</span>
+                    </div>
+                {% else %}
+                    <p class="rating-count">{{ t('no_reviews_yet') }}</p>
+                {% endif %}
+
+                <p class="price" style="font-size:26px;">{{ product.price|tmt }}</p>
+                <p>{{ product.description }}</p>
+
+                <!-- Detailed product facts table -->
+                <table class="product-facts">
+                    <tr>
+                        <td>SKU</td>
+                        <td>{{ product.sku }}</td>
+                    </tr>
+                    <tr>
+                        <td>Category</td>
+                        <td>{{ product.category_obj.localized_name(current_lang) if product.category_obj else product.category }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ t('in_stock') }}</td>
+                        <td>
+                            {% if product.stock_qty > 0 %}
+                                <span class="stock-yes">{{ product.stock_qty }}</span>
+                            {% else %}
+                                <span class="stock-no">Out of stock</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Brand</td>
+                        <td>LG Electronics</td>
+                    </tr>
+                    <tr>
+                        <td>Warranty</td>
+                        <td>12 months, official manufacturer warranty</td>
+                    </tr>
+                </table>
+
+                <!-- Add to cart -->
+                <form class="add-to-cart-form" action="{{ url_for('store.cart_add', product_id=product.id) }}" method="post">
+                    <label for="quantity">{{ t('qty') }}</label>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ product.stock_qty }}">
+                    <button type="submit" class="btn-add-cart">{{ t('add_to_cart') }}</button>
+                </form>
+
+                <!-- Direct seller contact: Call button -->
+                {% if store_info %}
+                <div class="seller-contact-box">
+                    <h3>{{ t('contact_seller') }}</h3>
+                    <p>{{ store_info.address }}</p>
+                    <p>{{ store_info.hours }}</p>
+                    <a class="btn-call" href="tel:{{ store_info.phone|replace(' ', '') }}">
+                        📞 {{ t('call') }} {{ store_info.phone }}
+                    </a>
+                </div>
+                {% endif %}
+
+                <a href="{{ url_for('store.home') }}">&larr; {{ t('back_to_store') }}</a>
+            </div>
+        </div>
+
+        <!-- Reviews / feedback -->
+        <div class="reviews-section">
+            <h2>{{ t('customer_feedback') }}</h2>
+
+            {% if session.get('customer_id') %}
+                <form class="review-form" action="{{ url_for('store.add_review', product_id=product.id) }}" method="post">
+                    <label for="rating">{{ t('your_rating') }}</label>
+                    <select id="rating" name="rating" required>
+                        <option value="">Select rating</option>
+                        <option value="5">★★★★★ - Excellent</option>
+                        <option value="4">★★★★☆ - Good</option>
+                        <option value="3">★★★☆☆ - Average</option>
+                        <option value="2">★★☆☆☆ - Poor</option>
+                        <option value="1">★☆☆☆☆ - Very poor</option>
+                    </select>
+                    <textarea name="comment" rows="3" placeholder="Share your experience with this product..."></textarea>
+                    <button type="submit">{{ t('submit_feedback') }}</button>
+                </form>
+            {% else %}
+                <p><a href="{{ url_for('store.login', next=request.path) }}">{{ t('log_in') }}</a> {{ t('leave_feedback_login') }}</p>
+            {% endif %}
+
+            {% if reviews|length == 0 %}
+                <p>No feedback yet. Be the first to review this product!</p>
+            {% else %}
+                <div class="review-list">
+                    {% for r in reviews %}
+                        <div class="review-item">
+                            <div class="review-stars">{{ "★" * r.rating }}{{ "☆" * (5 - r.rating) }}</div>
+                            {% if r.comment %}<p class="review-comment">{{ r.comment }}</p>{% endif %}
+                            <p class="review-meta">{{ r.customer.full_name }} &middot; {{ r.created_at.strftime('%B %d, %Y') }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ t('edit_product') if product else t('add_new_product_title') }} - {{ t('lg_store_admin') }}{% endblock %}
+
+{% block content %}
+<div class="form-box">
+    <h2>{{ t('edit_product') if product else t('add_new_product_title') }}</h2>
+
+    <form action="{{ url_for('admin.product_edit', product_id=product.id) if product else url_for('admin.product_add') }}"
+          method="post">
+
+        <input type="text" name="name" placeholder="{{ t('product_name_label') }}"
+               value="{{ product.name if product else '' }}" required>
+
+        <select name="category_id" required>
+            <option value="">{{ t('category_label') }}</option>
+            {% for c in categories %}
+                <option value="{{ c.id }}" {% if product and product.category_id == c.id %}selected{% endif %}>
+                    {{ c.icon }} {{ c.localized_name(current_lang) }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <input type="number" step="0.01" name="price" placeholder="{{ t('price_label') }}"
+               value="{{ product.price if product else '' }}" required>
+
+        <input type="number" name="stock_qty" placeholder="{{ t('stock_qty_label') }}"
+               value="{{ product.stock_qty if product else 100 }}">
+
+        <label for="image_urls">{{ t('image_gallery_label') }}</label>
+        <textarea id="image_urls" name="image_urls" rows="3" placeholder="/static/images/products/tv.svg">{% if product %}{% for img in product.images %}{{ img.image_url }}
+{% endfor %}{% endif %}</textarea>
+
+        <textarea name="description" rows="4" placeholder="{{ t('description_label') }}">{{ product.description if product else '' }}</textarea>
+
+        <label style="display:flex; align-items:center; gap:8px; font-weight:normal;">
+            <input type="checkbox" name="is_featured" value="1" style="width:auto;"
+                   {% if product and product.is_featured %}checked{% endif %}>
+            {{ t('mark_best_seller') }}
+        </label>
+
+        <button type="submit">{{ t('save_changes') if product else t('save_product') }}</button>
+    </form>
+</div>
+{% endblock %}

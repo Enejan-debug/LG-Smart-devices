@@ -1,0 +1,904 @@
+/* ==========================================================================
+   LG Store - Global styles
+   Covers: storefront, product detail, cart, checkout, account, reviews,
+   and the admin panel (products + orders).
+   ========================================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    color: #222;
+}
+
+a {
+    color: inherit;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* ---------------- Navbar ---------------- */
+
+.navbar {
+    background-color: #a50034; /* LG brand red */
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.navbar .brand {
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+
+.navbar .nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.navbar .nav-links a:hover {
+    text-decoration: underline;
+}
+
+.navbar .nav-admin {
+    opacity: 0.85;
+    border-left: 1px solid rgba(255,255,255,0.4);
+    padding-left: 20px;
+}
+
+.lang-switch {
+    border-left: 1px solid rgba(255,255,255,0.4);
+    padding-left: 16px;
+    margin-left: 4px;
+}
+
+.lang-switch a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    margin-left: 8px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.lang-switch a.lang-active {
+    color: white;
+    text-decoration: underline;
+}
+
+.navbar-admin {
+    background-color: #1a1a1a;
+}
+
+/* ---------------- Flash messages ---------------- */
+
+.flash-wrap {
+    max-width: 1100px;
+    margin: 15px auto 0;
+    padding: 0 20px;
+}
+
+.flash {
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.flash-success {
+    background-color: #e6f4ea;
+    color: #1e7e34;
+    border: 1px solid #c3e6cb;
+}
+
+.flash-error {
+    background-color: #fdecea;
+    color: #a50034;
+    border: 1px solid #f5c6cb;
+}
+
+.error-msg {
+    color: #a50034;
+    font-weight: bold;
+}
+
+/* ---------------- Filter bar ---------------- */
+
+.filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filter-bar input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-bar select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.filter-bar button {
+    padding: 10px 20px;
+    background-color: #a50034;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-clear {
+    padding: 10px 16px;
+    background-color: #eee;
+    color: #333;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* ---------------- Featured / Best Sellers section ---------------- */
+
+.featured-section {
+    background: linear-gradient(135deg, #a50034 0%, #7a0026 100%);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 30px;
+}
+
+.featured-title {
+    color: white;
+    margin: 0 0 16px 0;
+    font-size: 20px;
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.featured-card {
+    position: relative;
+    background: white;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    text-decoration: none;
+    color: #222;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    transition: transform 0.15s ease;
+}
+
+.featured-card:hover {
+    transform: translateY(-4px) scale(1.02);
+}
+
+.featured-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #a50034;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 1;
+}
+
+.featured-card img {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+.featured-card h3 {
+    font-size: 14px;
+    margin: 6px 0;
+}
+
+.featured-price {
+    font-weight: bold;
+    color: #a50034;
+    font-size: 15px;
+}
+
+/* ---------------- Product grid / cards ---------------- */
+
+.category-tag {
+    display: inline-block;
+    background-color: #f0f0f0;
+    color: #666;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 22px;
+}
+
+.product-card-wrap {
+    position: relative;
+}
+
+.product-card {
+    display: block;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+    padding: 16px;
+    text-align: center;
+    text-decoration: none;
+    color: #222;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid rgba(0,0,0,0.04);
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(165,0,52,0.12), 0 4px 8px rgba(0,0,0,0.06);
+}
+
+.product-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: #f7f7f7;
+}
+
+.product-card h3 {
+    font-size: 15px;
+    margin: 6px 0;
+    font-weight: 600;
+}
+
+.wishlist-form {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+}
+
+.wishlist-btn {
+    background: rgba(255,255,255,0.9);
+    border: none;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    color: #a50034;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.wishlist-btn:hover {
+    transform: scale(1.1);
+    background: #a50034;
+    color: white;
+}
+
+.price {
+    font-weight: bold;
+    color: #a50034;
+}
+
+/* ---------------- Product detail page ---------------- */
+
+.product-detail {
+    display: flex;
+    gap: 30px;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    flex-wrap: wrap;
+}
+
+.product-detail img {
+    width: 350px;
+    max-width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.product-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 350px;
+    max-width: 100%;
+}
+
+.gallery-main {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #f7f7f7;
+}
+
+.gallery-thumbs {
+    display: flex;
+    gap: 8px;
+}
+
+.gallery-thumbs img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border 0.15s ease;
+}
+
+.gallery-thumbs img:hover {
+    border-color: #a50034;
+}
+
+.product-detail-info {
+    flex: 1;
+    min-width: 260px;
+}
+
+.stars-small {
+    color: #f5a623;
+    font-size: 18px;
+    margin: 6px 0;
+}
+
+.product-facts {
+    width: 100%;
+    max-width: 420px;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+}
+
+.product-facts td {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.product-facts td:first-child {
+    color: #888;
+    width: 40%;
+}
+
+.stock-yes {
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+.stock-no {
+    color: #a50034;
+    font-weight: bold;
+}
+
+.rating-count {
+    color: #888;
+    font-size: 13px;
+}
+
+.add-to-cart-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 18px 0;
+}
+
+.add-to-cart-form input[type="number"] {
+    width: 70px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.btn-add-cart {
+    background-color: #a50034;
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-add-cart:hover {
+    background-color: #82002a;
+}
+
+/* ---------------- Seller contact box + Call button ---------------- */
+
+.seller-contact-box {
+    margin-top: 20px;
+    padding: 16px;
+    background-color: #fff7f0;
+    border: 1px solid #f0dcc8;
+    border-radius: 8px;
+}
+
+.seller-contact-box h3 {
+    margin-top: 0;
+    font-size: 15px;
+}
+
+.btn-call {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #2e7d32;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.btn-call:hover {
+    background-color: #245c26;
+}
+
+.tel-link {
+    color: #a50034;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* ---------------- Reviews / feedback ---------------- */
+
+.reviews-section {
+    margin-top: 30px;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 500px;
+    margin-bottom: 25px;
+}
+
+.review-form select,
+.review-form textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: inherit;
+}
+
+.review-form button {
+    align-self: flex-start;
+    background-color: #a50034;
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.review-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.review-item {
+    border-top: 1px solid #eee;
+    padding-top: 12px;
+}
+
+.review-stars {
+    color: #f5a623;
+    font-size: 16px;
+}
+
+.review-comment {
+    margin: 6px 0;
+}
+
+.review-meta {
+    color: #888;
+    font-size: 12px;
+}
+
+/* ---------------- Forms (login/register/admin login/add/edit) ---------------- */
+
+.form-box {
+    max-width: 420px;
+    margin: 60px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.form-box h2 {
+    text-align: center;
+    margin-top: 0;
+}
+
+.form-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-box input,
+.form-box textarea,
+.form-box select {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    width: 100%;
+}
+
+.form-box button {
+    background-color: #a50034;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.form-box button:hover {
+    background-color: #82002a;
+}
+
+.form-box p a {
+    color: #a50034;
+    font-weight: bold;
+}
+
+/* ---------------- Cart ---------------- */
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.cart-table th,
+.cart-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.qty-form {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.qty-form input[type="number"] {
+    width: 60px;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.cart-total-box {
+    text-align: right;
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+.btn-checkout {
+    display: inline-block;
+    margin-top: 12px;
+    background-color: #a50034;
+    color: white;
+    text-decoration: none;
+    padding: 12px 26px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.btn-checkout:hover {
+    background-color: #82002a;
+}
+
+/* ---------------- Checkout summary ---------------- */
+
+.checkout-summary {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+}
+
+.order-total {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 10px;
+}
+
+/* ---------------- Account page / order history ---------------- */
+
+.account-info {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+}
+
+.order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.order-card {
+    background: white;
+    padding: 18px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.order-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.order-status {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 10px;
+    text-transform: capitalize;
+}
+
+/* Status colors shared with admin order table */
+
+.status-tag,
+.order-status {
+    display: inline-block;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-confirmed {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-completed {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* ---------------- Profile photo / avatar ---------------- */
+
+.profile-photo-box {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+}
+
+.avatar-preview {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: linear-gradient(135deg, #a50034, #7a0026);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(165,0,52,0.3);
+}
+
+.avatar-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-initials {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.btn-upload-photo {
+    display: inline-block;
+    background: #f0f0f0;
+    color: #333;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.btn-upload-photo:hover {
+    background: #a50034;
+    color: white;
+}
+
+.avatar-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    vertical-align: middle;
+}
+
+/* ---------------- Account page nav-link edit button ---------------- */
+
+.btn-edit-profile {
+    display: inline-block;
+    background: #a50034;
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.admin-body {
+    background-color: #f4f4f4;
+}
+
+/* ---------------- Admin panel ---------------- */
+
+.btn-add {
+    display: inline-block;
+    background-color: #a50034;
+    color: white;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.admin-table th {
+    background-color: #f8f8f8;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #666;
+}
+
+.btn-edit,
+.btn-delete {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 6px;
+}
+
+.btn-edit {
+    background-color: #e8f0fe;
+    color: #1a56db;
+}
+
+.btn-delete {
+    background-color: #fdecea;
+    color: #a50034;
+}
+
+.admin-table select {
+    padding: 6px 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+/* ---------------- Footer ---------------- */
+
+.site-footer {
+    background-color: #1a1a1a;
+    color: #ccc;
+    padding: 25px 30px;
+    margin-top: 50px;
+    font-size: 13px;
+}
+
+.footer-store {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.footer-store strong {
+    color: white;
+    font-size: 15px;
+}

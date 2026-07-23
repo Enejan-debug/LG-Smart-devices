@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}{{ t('checkout') }} - LG Store{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ t('checkout') }}</h1>
+
+    <div class="checkout-summary">
+        <h2>{{ t('order_summary') }}</h2>
+        <ul>
+            {% for entry in items %}
+                <li>{{ entry.quantity }} x {{ entry.product.name }} - {{ entry.subtotal|tmt }}</li>
+            {% endfor %}
+        </ul>
+        <p class="order-total">{{ t('total') }}: {{ total|tmt }}</p>
+    </div>
+
+    {% if store_info %}
+    <div class="seller-contact-box">
+        <h3>{{ t('about_payment') }}</h3>
+        <p>{{ t('payment_info') }}</p>
+        <p>{{ store_info.address }}</p>
+        <a class="btn-call" href="tel:{{ store_info.phone|replace(' ', '') }}">📞 {{ t('call_seller_now') }}: {{ store_info.phone }}</a>
+    </div>
+    {% endif %}
+
+    <form class="form-box" action="{{ url_for('store.checkout') }}" method="post">
+        <h2>{{ t('delivery_payment_details') }}</h2>
+
+        <label for="contact_phone">{{ t('your_phone') }}</label>
+        <input type="tel" id="contact_phone" name="contact_phone" value="{{ customer.phone or '' }}" required>
+
+        <label for="payment_method">{{ t('payment_method') }}</label>
+        <select id="payment_method" name="payment_method" required>
+            <option value="cash">{{ t('cash_on_pickup') }}</option>
+            <option value="transfer">{{ t('phone_bank_transfer') }}</option>
+        </select>
+
+        <label for="notes">{{ t('notes_for_seller') }}</label>
+        <textarea id="notes" name="notes" rows="3" placeholder="e.g. preferred pickup time"></textarea>
+
+        <button type="submit" class="btn-checkout">{{ t('place_order') }}</button>
+    </form>
+</div>
+{% endblock %}

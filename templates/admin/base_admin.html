@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="tk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ t('lg_store_admin') }}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="admin-body">
+
+    <div class="navbar navbar-admin">
+        <a class="brand" href="{{ url_for('admin.product_list') }}">{{ t('lg_store_admin') }}</a>
+        <div class="nav-links">
+            <a href="{{ url_for('admin.product_list') }}">{{ t('manage_products') }}</a>
+            <a href="{{ url_for('admin.order_list') }}">{{ t('orders_title') }}</a>
+            <a href="{{ url_for('store.home') }}">{{ t('view_store') }}</a>
+            <a href="{{ url_for('admin.logout') }}">{{ t('logout') }}</a>
+        </div>
+    </div>
+
+    <div class="flash-wrap">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+</html>

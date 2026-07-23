@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <rect width="400" height="300" fill="#f4f4f4"/>
+  <rect x="160" y="60" width="80" height="180" rx="14" fill="#eef5ee"/>
+  <rect x="160" y="60" width="80" height="180" rx="14" fill="none" stroke="#588157" stroke-width="2"/>
+  <rect x="175" y="80" width="50" height="10" rx="5" fill="#588157"/>
+  <circle cx="200" cy="150" r="30" fill="none" stroke="#588157" stroke-width="3" opacity="0.4"/>
+  <circle cx="200" cy="150" r="18" fill="none" stroke="#588157" stroke-width="3" opacity="0.6"/>
+  <circle cx="200" cy="150" r="6" fill="#588157"/>
+  <text x="200" y="270" font-family="Arial, sans-serif" font-size="16" fill="#a50034" text-anchor="middle" font-weight="bold">LG Air Purifier</text>
+</svg>

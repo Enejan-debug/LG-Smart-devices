@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <rect width="400" height="300" fill="#f4f4f4"/>
+  <rect x="100" y="70" width="200" height="130" rx="6" fill="#3a3a3a"/>
+  <rect x="110" y="80" width="180" height="110" rx="2" fill="#5aa0e0"/>
+  <path d="M80 200 L320 200 L305 225 L95 225 Z" fill="#6c757d"/>
+  <rect x="80" y="200" width="240" height="8" fill="#5c636a"/>
+  <text x="200" y="260" font-family="Arial, sans-serif" font-size="16" fill="#a50034" text-anchor="middle" font-weight="bold">LG Gram Laptop</text>
+</svg>

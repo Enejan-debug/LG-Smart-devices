@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}{{ t('our_products') }} - LG Store{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ t('our_products') }}</h1>
+
+    {% if featured and featured|length > 0 %}
+        <div class="featured-section">
+            <h2 class="featured-title">🔥 {{ t('best_sellers') }}</h2>
+            <div class="featured-grid">
+                {% for p in featured %}
+                    <a class="featured-card" href="{{ url_for('store.product_detail', product_id=p.id) }}">
+                        <span class="featured-badge">{{ t('best_seller_badge') }}</span>
+                        <img src="{{ p.image_url if p.image_url else 'https://placehold.co/400x300?text=No+Image' }}" alt="{{ p.name }}">
+                        <h3>{{ p.name }}</h3>
+                        <div class="featured-price">{{ p.price|tmt }}</div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <form class="filter-bar" action="{{ url_for('store.home') }}" method="get">
+        <input type="text" name="keyword" placeholder="{{ t('search_placeholder') }}"
+               value="{{ keyword or '' }}">
+
+        <select name="category" onchange="this.form.submit()">
+            <option value="">{{ t('all_categories') }}</option>
+            {% for c in categories %}
+                <option value="{{ c.slug }}" {% if c.slug == selected_category %}selected{% endif %}>
+                    {{ c.icon }} {{ c.localized_name(current_lang) }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">{{ t('search') }}</button>
+        <a class="btn-clear" href="{{ url_for('store.home') }}">{{ t('clear') }}</a>
+    </form>
+
+    {% if products is none %}
+        <p class="error-msg">Could not load products. Please check the database connection.</p>
+    {% elif products|length == 0 %}
+        <p>{{ t('no_products_found') }}</p>
+    {% else %}
+        <div class="product-grid">
+            {% for p in products %}
+                <div class="product-card-wrap">
+                    <a class="product-card" href="{{ url_for('store.product_detail', product_id=p.id) }}">
+                        <img src="{{ p.image_url }}" alt="{{ p.name }}">
+                        <span class="category-tag">{{ p.category_obj.icon }} {{ p.category_obj.localized_name(current_lang) if p.category_obj else p.category }}</span>
+                        <h3>{{ p.name }}</h3>
+                        {% if p.quality_rating %}
+                            <div class="stars-small">{{ "★" * (p.quality_rating|round|int) }}{{ "☆" * (5 - (p.quality_rating|round|int)) }}
+                                <span class="rating-count">({{ p.quality_rating }})</span>
+                            </div>
+                        {% endif %}
+                        <div class="price">{{ p.price|tmt }}</div>
+                    </a>
+                    {% if session.get('customer_id') %}
+                        <form action="{{ url_for('store.wishlist_toggle', product_id=p.id) }}" method="post" class="wishlist-form">
+                            <button type="submit" class="wishlist-btn" title="{{ t('add_to_wishlist') }}">♡</button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{{ t('your_cart') }} - LG Store{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ t('your_cart') }}</h1>
+
+    {% if items|length == 0 %}
+        <p>{{ t('cart_empty') }} <a href="{{ url_for('store.home') }}">{{ t('browse_products') }}</a>.</p>
+    {% else %}
+        <table class="admin-table">
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>{{ t('qty') }}</th>
+                <th>Subtotal</th>
+                <th>Action</th>
+            </tr>
+            {% for entry in items %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('store.product_detail', product_id=entry.product.id) }}">{{ entry.product.name }}</a>
+                    </td>
+                    <td>{{ entry.product.price|tmt }}</td>
+                    <td>
+                        <form action="{{ url_for('store.cart_update', product_id=entry.product.id) }}" method="post" class="qty-form">
+                            <input type="number" name="quantity" value="{{ entry.quantity }}" min="1" max="{{ entry.product.stock_qty }}">
+                            <button type="submit">{{ t('update') }}</button>
+                        </form>
+                    </td>
+                    <td>{{ entry.subtotal|tmt }}</td>
+                    <td>
+                        <form action="{{ url_for('store.cart_remove', product_id=entry.product.id) }}" method="post">
+                            <button type="submit" class="btn-delete">{{ t('remove') }}</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <div class="cart-total-box">
+            <h2>{{ t('total') }}: {{ total|tmt }}</h2>
+            <a class="btn-checkout" href="{{ url_for('store.checkout') }}">{{ t('proceed_checkout') }}</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

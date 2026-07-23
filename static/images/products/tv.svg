@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <rect width="400" height="300" fill="#f4f4f4"/>
+  <rect x="60" y="50" width="280" height="160" rx="6" fill="#1a1a1a"/>
+  <rect x="72" y="62" width="256" height="136" rx="2" fill="#2b6ca3"/>
+  <rect x="72" y="62" width="256" height="136" rx="2" fill="url(#screenGrad)"/>
+  <defs>
+    <linearGradient id="screenGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3a7bd5"/>
+      <stop offset="1" stop-color="#1a1a2e"/>
+    </linearGradient>
+  </defs>
+  <rect x="185" y="210" width="30" height="24" fill="#1a1a1a"/>
+  <rect x="140" y="234" width="120" height="8" rx="4" fill="#1a1a1a"/>
+  <circle cx="300" cy="90" r="4" fill="#a50034"/>
+  <text x="200" y="270" font-family="Arial, sans-serif" font-size="16" fill="#a50034" text-anchor="middle" font-weight="bold">LG TV</text>
+</svg>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}LG Store{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="navbar">
+        <a class="brand" href="{{ url_for('store.home') }}">LG Store</a>
+
+        <div class="nav-links">
+            <a href="{{ url_for('store.home') }}">{{ t('home') }}</a>
+            <a href="{{ url_for('store.cart_view') }}">{{ t('cart') }}{% if session.get('cart') %} ({{ session.get('cart')|length }}){% endif %}</a>
+
+            {% if session.get('customer_id') %}
+                <a href="{{ url_for('store.account') }}">{{ t('my_account') }}</a>
+                <a href="{{ url_for('store.logout') }}">{{ t('logout') }}</a>
+            {% else %}
+                <a href="{{ url_for('store.login') }}">{{ t('login') }}</a>
+                <a href="{{ url_for('store.register') }}">{{ t('register') }}</a>
+            {% endif %}
+
+            <a class="nav-admin" href="{{ url_for('admin.login') }}">{{ t('admin') }}</a>
+
+            <span class="lang-switch">
+                <a href="{{ url_for('store.set_language', lang_code='tk') }}" class="{{ 'lang-active' if current_lang == 'tk' }}">TK</a>
+                <a href="{{ url_for('store.set_language', lang_code='ru') }}" class="{{ 'lang-active' if current_lang == 'ru' }}">RU</a>
+                <a href="{{ url_for('store.set_language', lang_code='en') }}" class="{{ 'lang-active' if current_lang == 'en' }}">EN</a>
+            </span>
+        </div>
+    </div>
+
+    <div class="flash-wrap">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        {% if store_info %}
+        <div class="footer-store">
+            <strong>{{ store_info.name }}</strong>
+            <span>{{ store_info.address }}</span>
+            <span>
+                {{ t('call') }}:
+                <a class="tel-link" href="tel:{{ store_info.phone|replace(' ', '') }}">{{ store_info.phone }}</a>
+            </span>
+            <span>{{ store_info.hours }}</span>
+        </div>
+        {% endif %}
+    </footer>
+
+</body>
+</html>
